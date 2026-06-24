@@ -12,31 +12,19 @@
   <style>
     * { font-family: 'Inter', sans-serif; }
     body { background: #050a14; color: #e2e8f0; overflow-x: hidden; cursor: none; }
-
-    /* Custom Cursor */
-    #cursor { position: fixed; width: 20px; height: 20px; border-radius: 50%; background: #f97316; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease; }
+    #cursor { position: fixed; width: 20px; height: 20px; border-radius: 50%; background: #f97316; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s ease, height 0.2s ease; }
     #cursor-follower { position: fixed; width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(249,115,22,0.5); pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: left 0.15s ease, top 0.15s ease; }
-
-    /* Glassmorphism */
     .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); }
     .glass-orange { background: rgba(249,115,22,0.08); backdrop-filter: blur(16px); border: 1px solid rgba(249,115,22,0.2); }
-
-    /* Particle canvas */
     #particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-
-    /* Animations */
     .fade-up { opacity: 0; transform: translateY(40px); }
     .fade-left { opacity: 0; transform: translateX(-40px); }
     .fade-right { opacity: 0; transform: translateX(40px); }
-
-    /* Fizzy button */
     .btn-fizzy { position: relative; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
     .btn-fizzy:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(249,115,22,0.5); }
     .btn-fizzy:active { transform: scale(0.97); }
     .btn-fizzy::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at var(--x,50%) var(--y,50%), rgba(255,255,255,0.15) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; }
     .btn-fizzy:hover::after { opacity: 1; }
-
-    /* Bento grid */
     .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
     .bento-1 { grid-column: span 7; }
     .bento-2 { grid-column: span 5; }
@@ -46,40 +34,30 @@
     .bento-6 { grid-column: span 4; }
     .bento-7 { grid-column: span 4; }
     @media (max-width: 768px) { .bento-1,.bento-2,.bento-3,.bento-4,.bento-5,.bento-6,.bento-7 { grid-column: span 12; } }
-
-    /* Icon hover spin */
     .icon-hover { transition: transform 0.3s ease; display: inline-flex; }
     .icon-hover:hover { transform: rotate(15deg) scale(1.2); }
-
-    /* Floating hero image */
     .float-img { animation: floatAnim 4s ease-in-out infinite; }
-    @keyframes floatAnim { 0%,100% { transform: translateY(0px) rotateY(0deg); } 50% { transform: translateY(-14px) rotateY(3deg); } }
-
-    /* Gradient text */
+    @keyframes floatAnim { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-14px); } }
     .grad-text { background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-    /* Glow */
     .glow { box-shadow: 0 0 60px rgba(249,115,22,0.15); }
     .glow-sm { box-shadow: 0 0 20px rgba(249,115,22,0.2); }
-
-    /* Stars */
     .stars { color: #f59e0b; letter-spacing: 2px; }
-
-    /* Chat widget */
     #chat-widget { position: fixed; bottom: 24px; right: 24px; z-index: 1000; }
     #chat-bubble { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ea580c); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 24px rgba(249,115,22,0.5); animation: pulse 2s infinite; position: relative; }
     @keyframes pulse { 0%,100% { box-shadow: 0 4px 24px rgba(249,115,22,0.5); } 50% { box-shadow: 0 4px 40px rgba(249,115,22,0.8); } }
     #chat-panel { position: absolute; bottom: 75px; right: 0; width: 320px; display: none; }
     #chat-panel.open { display: block; }
-
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: #050a14; }
     ::-webkit-scrollbar-thumb { background: #f97316; border-radius: 2px; }
-
-    /* Nav */
     nav { transition: background 0.3s ease; }
     nav.scrolled { background: rgba(5,10,20,0.95) !important; backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .video-thumb { position: relative; overflow: hidden; border-radius: 16px; cursor: pointer; }
+    .video-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+    .video-thumb:hover img { transform: scale(1.05); }
+    .video-thumb .play-btn { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: background 0.3s; }
+    .video-thumb:hover .play-btn { background: rgba(249,115,22,0.4); }
+    .img-placeholder-label { position: absolute; bottom: 8px; left: 8px; background: rgba(249,115,22,0.85); color: white; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
   </style>
 </head>
 <body>
@@ -135,30 +113,25 @@
         <div class="text-center"><div class="text-3xl font-black text-white">1,200+</div><div class="text-xs text-slate-500">Homes Served</div></div>
       </div>
     </div>
+    <!-- HERO IMAGE -->
     <div class="relative z-10 flex justify-center fade-right">
       <div class="relative">
         <div class="absolute inset-0 bg-orange-500 rounded-3xl blur-3xl opacity-20 scale-110"></div>
-        <div class="float-img relative glass rounded-3xl overflow-hidden glow p-2" style="max-width:460px">
-          <div class="w-full h-80 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex flex-col items-center justify-center gap-4">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-24 h-24" fill="none">
-              <rect x="8" y="32" width="48" height="24" rx="4" fill="#1e293b" stroke="#f97316" stroke-width="2"/>
-              <rect x="16" y="8" width="32" height="24" rx="4" fill="#1e293b" stroke="#f97316" stroke-width="2"/>
-              <circle cx="32" cy="20" r="6" fill="#f97316"/>
-              <path d="M20 44h24M26 50h12" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <div class="text-center">
-              <div class="text-white font-bold text-lg">C &amp; S HVAC</div>
-              <div class="text-orange-400 text-sm">Cleveland's West Side Experts</div>
-            </div>
-            <div class="flex gap-3">
-              <div class="glass-orange rounded-xl px-4 py-2 text-center"><div class="text-orange-400 font-bold text-sm">Furnaces</div><div class="text-xs text-slate-400">All brands</div></div>
-              <div class="glass-orange rounded-xl px-4 py-2 text-center"><div class="text-orange-400 font-bold text-sm">Boilers</div><div class="text-xs text-slate-400">Repair &amp; Install</div></div>
-              <div class="glass-orange rounded-xl px-4 py-2 text-center"><div class="text-orange-400 font-bold text-sm">AC Units</div><div class="text-xs text-slate-400">Split systems</div></div>
+        <div class="float-img relative glass rounded-3xl overflow-hidden glow" style="max-width:500px">
+          <div class="relative">
+            <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/65bbd72c-9cb0-4628-a1c8-ba569daab3dd.png" alt="C&S HVAC technician servicing a furnace in Cleveland home" class="w-full h-auto object-cover rounded-3xl" style="max-height:420px;object-position:center top;" />
+            <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-900/90 to-transparent rounded-b-3xl"></div>
+            <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+              <div>
+                <div class="text-white font-bold text-sm">Certified HVAC Tech</div>
+                <div class="text-orange-400 text-xs">On-site, Same Day</div>
+              </div>
+              <div class="glass-orange rounded-xl px-3 py-1.5 text-xs text-orange-300 font-semibold">&#128994; Available Now</div>
             </div>
           </div>
         </div>
         <div class="absolute -bottom-4 -right-4 glass-orange rounded-2xl px-5 py-3">
-          <div class="text-orange-400 font-bold text-sm">&#128994; Lines Open Now</div>
+          <div class="text-orange-400 font-bold text-sm">&#9742; Lines Open Now</div>
           <div class="text-sm text-slate-300">(216) 251-4113</div>
         </div>
       </div>
@@ -192,18 +165,22 @@
       <h2 class="text-4xl md:text-5xl font-black fade-up">Every HVAC Problem.<br/><span class="grad-text">One Phone Call.</span></h2>
     </div>
     <div class="bento-grid">
-      <div class="bento-1 glass rounded-3xl p-8 glow fade-up" style="min-height:280px">
-        <div class="icon-hover w-14 h-14 rounded-2xl bg-orange-500/20 items-center justify-center mb-5">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"/></svg>
+      <div class="bento-1 glass rounded-3xl overflow-hidden glow fade-up" style="min-height:300px">
+        <div class="relative h-40 overflow-hidden">
+          <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/65bbd72c-9cb0-4628-a1c8-ba569daab3dd.png" alt="Furnace repair service" class="w-full h-full object-cover object-top" />
+          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-900/95"></div>
+          <div class="img-placeholder-label">Replace with client furnace photo</div>
         </div>
-        <h3 class="text-2xl font-bold text-white mb-3">Furnace Repair &amp; Replacement</h3>
-        <p class="text-slate-400 text-base leading-relaxed">When your furnace goes out in a Cleveland winter, you can't wait. We diagnose fast and repair the same day. All brands, all models. If it's beyond saving, we give you an honest quote for a replacement that fits your budget.</p>
-        <div class="mt-6 flex items-center gap-2 text-orange-400 font-semibold text-sm">
-          <span>Book a furnace call</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <div class="p-8">
+          <h3 class="text-2xl font-bold text-white mb-3">Furnace Repair &amp; Replacement</h3>
+          <p class="text-slate-400 text-base leading-relaxed">When your furnace goes out in a Cleveland winter, you can't wait. We diagnose fast and repair the same day. All brands, all models. If it's beyond saving, we give you an honest quote that fits your budget.</p>
+          <div class="mt-6 flex items-center gap-2 text-orange-400 font-semibold text-sm">
+            <span>Book a furnace call</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
         </div>
       </div>
-      <div class="bento-2 glass-orange rounded-3xl p-8 fade-up" style="min-height:280px">
+      <div class="bento-2 glass-orange rounded-3xl p-8 fade-up" style="min-height:300px">
         <div class="icon-hover w-14 h-14 rounded-2xl bg-orange-500/20 items-center justify-center mb-5">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
         </div>
@@ -212,7 +189,7 @@
       </div>
       <div class="bento-3 glass rounded-3xl p-8 fade-up">
         <div class="icon-hover w-14 h-14 rounded-2xl bg-cyan-500/20 items-center justify-center mb-5">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07-5.07l-.71.71M6.34 17.66l-.71.71m12.02 0l-.71-.71M6.34 6.34l-.71-.71"/><circle cx="12" cy="12" r="4" stroke-width="1.5"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1"/><circle cx="12" cy="12" r="4" stroke-width="1.5"/></svg>
         </div>
         <h3 class="text-2xl font-bold text-white mb-3">Central AC Installation</h3>
         <p class="text-slate-400">Beat the Cleveland heat with a properly sized, professionally installed central air system. We handle everything from load calculations to final walkthrough.</p>
@@ -222,7 +199,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
         </div>
         <h3 class="text-2xl font-bold text-white mb-3">Residential Split-System Installs</h3>
-        <p class="text-slate-400 leading-relaxed">Ductless mini-splits are perfect for Cleveland homes without existing ductwork. We handle Carrier, Lennox, Trane, and all major brands. Flexible financing available for qualified homeowners.</p>
+        <p class="text-slate-400 leading-relaxed">Ductless mini-splits are perfect for Cleveland homes without existing ductwork. We handle Carrier, Lennox, Trane, and all major brands. Flexible financing available.</p>
         <div class="mt-4 flex gap-3 flex-wrap">
           <span class="glass px-3 py-1 rounded-full text-xs text-slate-300">Carrier</span>
           <span class="glass px-3 py-1 rounded-full text-xs text-slate-300">Lennox</span>
@@ -264,26 +241,10 @@
       <h2 class="text-4xl md:text-5xl font-black fade-up">How We Get You<br/><span class="grad-text">Back to Comfort</span></h2>
     </div>
     <div class="grid md:grid-cols-4 gap-6">
-      <div class="glass rounded-3xl p-7 fade-up">
-        <div class="text-6xl font-black text-orange-500/20 leading-none mb-4">01</div>
-        <h3 class="text-xl font-bold text-white mb-2">You Call or Text</h3>
-        <p class="text-slate-400 text-sm">Reach us at (216) 251-4113. A real person picks up. Tell us what's going on and we'll schedule a same-day slot when possible.</p>
-      </div>
-      <div class="glass rounded-3xl p-7 fade-up">
-        <div class="text-6xl font-black text-orange-500/20 leading-none mb-4">02</div>
-        <h3 class="text-xl font-bold text-white mb-2">We Diagnose On-Site</h3>
-        <p class="text-slate-400 text-sm">Our tech arrives on time with a fully stocked parts van. We diagnose the problem and give you a clear, upfront price before touching anything.</p>
-      </div>
-      <div class="glass rounded-3xl p-7 fade-up">
-        <div class="text-6xl font-black text-orange-500/20 leading-none mb-4">03</div>
-        <h3 class="text-xl font-bold text-white mb-2">You Approve the Fix</h3>
-        <p class="text-slate-400 text-sm">You decide. No pressure, no upsell. If you say go, we handle it right then and there in most cases. No second trip needed.</p>
-      </div>
-      <div class="glass-orange rounded-3xl p-7 fade-up">
-        <div class="text-6xl font-black text-orange-500/20 leading-none mb-4">04</div>
-        <h3 class="text-xl font-bold text-white mb-2">Your Home Is Comfortable</h3>
-        <p class="text-slate-400 text-sm">Job done, cleaned up, and we walk you through what was fixed. You get a written summary and our warranty on all labor.</p>
-      </div>
+      <div class="glass rounded-3xl p-7 fade-up"><div class="text-6xl font-black text-orange-500/20 leading-none mb-4">01</div><h3 class="text-xl font-bold text-white mb-2">You Call or Text</h3><p class="text-slate-400 text-sm">Reach us at (216) 251-4113. A real person picks up. Tell us what's going on and we'll schedule a same-day slot when possible.</p></div>
+      <div class="glass rounded-3xl p-7 fade-up"><div class="text-6xl font-black text-orange-500/20 leading-none mb-4">02</div><h3 class="text-xl font-bold text-white mb-2">We Diagnose On-Site</h3><p class="text-slate-400 text-sm">Our tech arrives on time with a fully stocked parts van. We diagnose the problem and give you a clear, upfront price before touching anything.</p></div>
+      <div class="glass rounded-3xl p-7 fade-up"><div class="text-6xl font-black text-orange-500/20 leading-none mb-4">03</div><h3 class="text-xl font-bold text-white mb-2">You Approve the Fix</h3><p class="text-slate-400 text-sm">You decide. No pressure, no upsell. If you say go, we handle it right then and there in most cases.</p></div>
+      <div class="glass-orange rounded-3xl p-7 fade-up"><div class="text-6xl font-black text-orange-500/20 leading-none mb-4">04</div><h3 class="text-xl font-bold text-white mb-2">Your Home Is Comfortable</h3><p class="text-slate-400 text-sm">Job done, cleaned up, and we walk you through what was fixed. You get a written summary and our warranty on all labor.</p></div>
     </div>
   </div>
 </section>
@@ -295,37 +256,78 @@
       <p class="text-orange-400 text-sm uppercase tracking-widest mb-3 fade-up">Real Jobs. Real Results.</p>
       <h2 class="text-4xl md:text-5xl font-black fade-up">Cleveland Homeowners<br/><span class="grad-text">We've Helped</span></h2>
     </div>
-    <div class="grid md:grid-cols-3 gap-6 mb-16">
-      <div class="glass rounded-3xl p-7 fade-up">
-        <div class="flex items-center gap-2 mb-4"><span class="stars text-lg">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="text-slate-500 text-sm">West Side, Cleveland</span></div>
-        <h3 class="text-white font-bold mb-2">Furnace Failure in January</h3>
-        <p class="text-slate-400 text-sm leading-relaxed">"Our furnace died at 11pm on a Tuesday in January. C &amp; S had a tech out by 8am and fixed it in under two hours. Didn't try to upsell us on a new system. Just fixed what was broken."</p>
-        <div class="mt-4 border-t border-slate-800 pt-4 text-sm text-slate-500">Karen M. &mdash; Homeowner, Cleveland 44111</div>
-      </div>
-      <div class="glass-orange rounded-3xl p-7 fade-up">
-        <div class="flex items-center gap-2 mb-4"><span class="stars text-lg">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="text-slate-500 text-sm">Lakewood, OH</span></div>
-        <h3 class="text-white font-bold mb-2">Boiler Replacement Done Right</h3>
-        <p class="text-slate-400 text-sm leading-relaxed">"We had three companies quote us. C &amp; S came in $800 lower and explained exactly why we didn't need the oversized unit the others were pushing. Boiler's been running perfectly for two winters."</p>
-        <div class="mt-4 border-t border-slate-700 pt-4 text-sm text-slate-500">Tom &amp; Linda R. &mdash; Homeowners, Lakewood</div>
-      </div>
-      <div class="glass rounded-3xl p-7 fade-up">
-        <div class="flex items-center gap-2 mb-4"><span class="stars text-lg">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="text-slate-500 text-sm">Parma, OH</span></div>
-        <h3 class="text-white font-bold mb-2">AC Install Before the Heat Wave</h3>
-        <p class="text-slate-400 text-sm leading-relaxed">"Called on a Wednesday, had a quote Thursday, and they installed our new central air by Saturday morning. My wife and kids were cool all summer. Can't ask for more than that."</p>
-        <div class="mt-4 border-t border-slate-800 pt-4 text-sm text-slate-500">DeShawn W. &mdash; Homeowner, Parma</div>
+
+    <!-- BEFORE / AFTER CASE STUDY -->
+    <div class="glass rounded-3xl overflow-hidden mb-12 fade-up">
+      <div class="relative">
+        <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/c8a480c1-89ee-49de-9f56-2050ce77bbf2.png" alt="Before and after boiler replacement Cleveland" class="w-full h-72 object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+        <div class="img-placeholder-label">Replace with client before/after photos</div>
+        <div class="absolute bottom-6 left-8 right-8 flex justify-between items-end">
+          <div>
+            <div class="text-white font-black text-xl">Boiler Replacement &mdash; Lakewood, OH</div>
+            <div class="text-orange-400 text-sm mt-1">Completed in 1 day. $800 under competitor quotes.</div>
+          </div>
+          <div class="glass-orange rounded-2xl px-5 py-3 text-center">
+            <div class="text-white font-black text-2xl">$800</div>
+            <div class="text-orange-400 text-xs">Customer Saved</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="glass rounded-3xl p-10 text-center fade-up">
-      <p class="text-orange-400 text-sm uppercase tracking-widest mb-3">Video Testimonials</p>
-      <h3 class="text-2xl font-bold text-white mb-4">40+ Homeowners Share Their Stories</h3>
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-        <div class="glass rounded-2xl aspect-video flex items-center justify-center text-slate-600 text-3xl">&#9654;</div>
-        <div class="glass rounded-2xl aspect-video flex items-center justify-center text-slate-600 text-3xl">&#9654;</div>
-        <div class="glass rounded-2xl aspect-video flex items-center justify-center text-slate-600 text-3xl">&#9654;</div>
-        <div class="glass rounded-2xl aspect-video flex items-center justify-center text-slate-600 text-3xl">&#9654;</div>
-        <div class="glass rounded-2xl aspect-video flex items-center justify-center text-slate-600 text-3xl">&#9654;</div>
+
+    <!-- TESTIMONIAL CARDS WITH PHOTOS -->
+    <div class="grid md:grid-cols-3 gap-6 mb-16">
+      <div class="glass rounded-3xl overflow-hidden fade-up">
+        <div class="relative h-48">
+          <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/88f2810f-191d-4dad-96a7-dc0ce6a72e48.png" alt="Happy Cleveland homeowner Karen M." class="w-full h-full object-cover object-top" />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+          <div class="img-placeholder-label">Replace with client photo</div>
+          <div class="absolute bottom-3 left-4 flex items-center gap-1"><span class="stars text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-white font-bold mb-2">Furnace Failure in January</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">"Our furnace died at 11pm on a Tuesday in January. C &amp; S had a tech out by 8am and fixed it in under two hours. Didn't try to upsell us on a new system. Just fixed what was broken."</p>
+          <div class="mt-4 border-t border-slate-800 pt-4 text-sm text-slate-500">Karen M. &mdash; Homeowner, Cleveland 44111</div>
+        </div>
       </div>
-      <p class="text-slate-500 text-sm">Real reviews from real Cleveland homeowners. No scripts, no actors.</p>
+      <div class="glass-orange rounded-3xl overflow-hidden fade-up">
+        <div class="relative h-48">
+          <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/88f2810f-191d-4dad-96a7-dc0ce6a72e48.png" alt="Happy Cleveland homeowners Tom and Linda R." class="w-full h-full object-cover" style="object-position: center 20%;" />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+          <div class="img-placeholder-label">Replace with client photo</div>
+          <div class="absolute bottom-3 left-4 flex items-center gap-1"><span class="stars text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-white font-bold mb-2">Boiler Replacement Done Right</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">"We had three companies quote us. C &amp; S came in $800 lower and explained exactly why we didn't need the oversized unit the others were pushing. Boiler's been perfect for two winters."</p>
+          <div class="mt-4 border-t border-slate-700 pt-4 text-sm text-slate-500">Tom &amp; Linda R. &mdash; Homeowners, Lakewood</div>
+        </div>
+      </div>
+      <div class="glass rounded-3xl overflow-hidden fade-up">
+        <div class="relative h-48">
+          <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/88f2810f-191d-4dad-96a7-dc0ce6a72e48.png" alt="Happy Cleveland homeowner DeShawn W." class="w-full h-full object-cover" style="object-position: center 40%;" />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
+          <div class="img-placeholder-label">Replace with client photo</div>
+          <div class="absolute bottom-3 left-4 flex items-center gap-1"><span class="stars text-sm">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-white font-bold mb-2">AC Install Before the Heat Wave</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">"Called on a Wednesday, had a quote Thursday, and they installed our new central air by Saturday morning. My wife and kids were cool all summer."</p>
+          <div class="mt-4 border-t border-slate-800 pt-4 text-sm text-slate-500">DeShawn W. &mdash; Homeowner, Parma</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO TESTIMONIALS -->
+    <div class="glass rounded-3xl p-10 fade-up">
+      <p class="text-orange-400 text-sm uppercase tracking-widest mb-3 text-center">Video Testimonials</p>
+      <h3 class="text-2xl font-bold text-white mb-6 text-center">40+ Homeowners Share Their Stories</h3>
+      <div class="relative rounded-2xl overflow-hidden mb-6">
+        <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/6c178b37-9f64-4e02-8ace-32de7ba8f89b.png" alt="Video testimonials from Cleveland homeowners" class="w-full h-auto object-cover rounded-2xl" />
+        <div class="img-placeholder-label">Replace with real client video thumbnails</div>
+      </div>
+      <p class="text-slate-500 text-sm text-center">Real reviews from real Cleveland homeowners. No scripts, no actors.</p>
     </div>
   </div>
 </section>
@@ -375,15 +377,10 @@
             <input type="tel" placeholder="Phone number" class="bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors" required />
             <select class="bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-orange-500 transition-colors">
               <option value="">What do you need?</option>
-              <option>Furnace Repair</option>
-              <option>Furnace Replacement</option>
-              <option>Boiler Repair</option>
-              <option>Boiler Replacement</option>
-              <option>AC Installation</option>
-              <option>AC Repair</option>
-              <option>Annual Tune-Up</option>
-              <option>Emergency Service</option>
-              <option>Other</option>
+              <option>Furnace Repair</option><option>Furnace Replacement</option>
+              <option>Boiler Repair</option><option>Boiler Replacement</option>
+              <option>AC Installation</option><option>AC Repair</option>
+              <option>Annual Tune-Up</option><option>Emergency Service</option><option>Other</option>
             </select>
             <textarea placeholder="Tell us a bit more (optional)" rows="3" class="bg-slate-800/80 border border-slate-700 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors resize-none"></textarea>
             <button type="submit" class="btn-fizzy bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-4 rounded-2xl text-lg">Get My Free Estimate</button>
@@ -464,7 +461,6 @@
 </div>
 
 <script>
-// Cursor
 const cursor = document.getElementById('cursor');
 const follower = document.getElementById('cursor-follower');
 document.addEventListener('mousemove', (e) => {
@@ -475,8 +471,6 @@ document.querySelectorAll('a,button,input,select,textarea').forEach(el => {
   el.addEventListener('mouseenter', () => { cursor.style.width='40px'; cursor.style.height='40px'; });
   el.addEventListener('mouseleave', () => { cursor.style.width='20px'; cursor.style.height='20px'; });
 });
-
-// Fizzy radial
 document.querySelectorAll('.btn-fizzy').forEach(btn => {
   btn.addEventListener('mousemove', (e) => {
     const r = btn.getBoundingClientRect();
@@ -484,12 +478,8 @@ document.querySelectorAll('.btn-fizzy').forEach(btn => {
     btn.style.setProperty('--y', ((e.clientY-r.top)/r.height*100)+'%');
   });
 });
-
-// Navbar scroll
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
-
-// Particle canvas
 const canvas = document.getElementById('particle-canvas');
 const ctx = canvas.getContext('2d');
 let mouse = {x:null,y:null};
@@ -513,17 +503,11 @@ const particles = Array.from({length:80},()=>({
   });
   requestAnimationFrame(animate);
 })();
-
-// GSAP scroll
 gsap.registerPlugin(ScrollTrigger);
 document.querySelectorAll('.fade-up').forEach(el => gsap.fromTo(el,{opacity:0,y:40},{opacity:1,y:0,duration:.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}}));
 document.querySelectorAll('.fade-left').forEach(el => gsap.fromTo(el,{opacity:0,x:-40},{opacity:1,x:0,duration:.9,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}}));
 document.querySelectorAll('.fade-right').forEach(el => gsap.fromTo(el,{opacity:0,x:40},{opacity:1,x:0,duration:.9,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}}));
-
-// Chat
 function toggleChat(){ document.getElementById('chat-panel').classList.toggle('open'); }
-
-// Forms
 function handleLeadForm(e){ e.preventDefault(); alert('Thanks! Your HVAC Emergency Checklist is on its way.'); e.target.reset(); }
 function handleContactForm(e){ e.preventDefault(); alert('Got it! We will call you back shortly to confirm your free estimate.'); e.target.reset(); }
 </script>
